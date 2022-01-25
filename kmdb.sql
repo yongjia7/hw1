@@ -67,7 +67,11 @@
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS directors;
+DROP TABLE IF EXISTS years;
+DROP TABLE IF EXISTS casts;
 
 -- Create new tables, according to your domain model
 -- TODO!
@@ -93,3 +97,10 @@
 
 -- The SQL statement for the cast output
 -- TODO!
+
+
+DROP TABLE IF EXISTS ;
+DROP TABLE IF EXISTS teachers;
+DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS sections;
+DROP TABLE IF EXISTS enrollments;
