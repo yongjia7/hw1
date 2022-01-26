@@ -78,7 +78,6 @@ CREATE TABLE movies(
     rating TEXT,
     director TEXT
 );
-
 CREATE TABLE top_casts(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
@@ -89,12 +88,11 @@ CREATE TABLE top_casts(
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 INSERT INTO movies(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    year_released TEXT,
-    rating TEXT,
-    director TEXT
-);
+    title,
+    year_released,
+    rating,
+    director
+)
 VALUES (
     "Batman Begins",
     2005,
@@ -113,7 +111,6 @@ VALUES (
     "PG-13",
     "Christopher Nolan"
 );
-
 INSERT INTO casts(
     title,
     cast,
@@ -201,7 +198,7 @@ VALUES (
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+SELECT * FROM movies;
 
 -- Prints a header for the cast output
 .print ""
@@ -211,11 +208,4 @@ VALUES (
 
 
 -- The SQL statement for the cast output
--- TODO!
-
-
-DROP TABLE IF EXISTS ;
-DROP TABLE IF EXISTS teachers;
-DROP TABLE IF EXISTS courses;
-DROP TABLE IF EXISTS sections;
-DROP TABLE IF EXISTS enrollments;
+SELECT * FROM top_casts;
