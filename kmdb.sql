@@ -73,7 +73,6 @@ DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS roles_membership;
 
-
 -- Create new tables, according to your domain model
 CREATE TABLE movies(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -99,14 +98,14 @@ CREATE TABLE actors(
 
 CREATE TABLE roles(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT;
+    fullname TEXT,
     role_id INTEGER
 );
 
 CREATE TABLE roles_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
-    role_id INTEGER
+    id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -158,7 +157,7 @@ VALUES (
     3
 );
 
-INSERT INTO  actors(
+INSERT INTO actors(
     fullname,
     movie_id,
     director_id
@@ -239,7 +238,7 @@ VALUES (
     1
 );
 
-INSERT INTO  roles(
+INSERT INTO roles(
     fullname,
     role_id
 )
@@ -286,7 +285,7 @@ VALUES (
 
 INSERT INTO roles_membership(
     movie_id,
-    role_id
+    id
 )
 VALUES (
     1,
@@ -366,6 +365,9 @@ INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
 .print ""
 
 -- The SQL statement for the cast output
-SELECT movies.title, movies.year_released, movies.rating, directors.fullname
+SELECT movies.title, actors.fullname, roles.fullname
 FROM movies
-INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
+INNER JOIN actors ON movies.movie_id=actors.movie_id
+INNER JOIN roles ON roles.role_id=roles_membership.id
+INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id;
+
