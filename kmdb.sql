@@ -126,9 +126,8 @@ VALUES (
 );
 
 INSERT INTO directors(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
-);
+    fullname
+)
 VALUES (
     "Christopher Nolan"
 );
