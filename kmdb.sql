@@ -68,7 +68,7 @@
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS top_casts;
+DROP TABLE IF EXISTS casts;
 
 -- Create new tables, according to your domain model
 CREATE TABLE movies(
@@ -76,122 +76,228 @@ CREATE TABLE movies(
     title TEXT,
     year_released TEXT,
     rating TEXT,
-    director TEXT
+    director_id INTEGER
 );
-CREATE TABLE top_casts(
+
+CREATE TABLE directors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    cast TEXT,
-    role TEXT
+    fullname TEXT
+);
+
+CREATE TABLE actors(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    movie_id INTEGER,
+    director_id INTEGER,
+);
+
+CREATE TABLE roles(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    movie_id INTEGER,
 );
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
+
 INSERT INTO movies(
     title,
     year_released,
     rating,
-    director
+    director_id
 )
 VALUES (
     "Batman Begins",
     2005,
     "PG-13",
-    "Christopher Nolan"
+    1
 ),
  (
     "The Dark Knight",
     2008,
     "PG-13",
-    "Christopher Nolan"
+    1
 ),
  (
     "The Dark Knight Rises",
     2012,
     "PG-13",
-    "Christopher Nolan"
-);
-INSERT INTO casts(
-    title,
-    cast,
-    role
-);
-VALUES (
-    "Batman Begins",
-    "Christian Bale",
-    "Bruce Wayne"
-),
-(
-    "Batman Begins",
-    "Michael Caine",
-    "Alfred"
-),
-(
-    "Batman Begins",
-    "Liam Neeson",
-    "Ra's Al Ghul"
-),
-(
-    "Batman Begins",
-    "Katie Holmes",
-    "Rachel Dawes"
-),
-(
-    "Batman Begins",
-    "Gary Oldman",
-    "Commissioner Gordon"
-),
-(
-    "The Dark Knight",
-    "Christian Bale",
-    "Bruce Wayne"
-),
-(
-    "The Dark Knight",
-    "Heath Ledger",
-    "Joker"
-),
-(
-    "The Dark Knight",
-    "Aaron Eckhart",
-    "Harvey Dent"
-),
-(
-    "The Dark Knight",
-    "Michael Caine",
-    "Alfred"
-),
-(
-    "The Dark Knight",
-    "Maggie Gyllenhaal",
-    "Rachel Dawes"
-),
-(
-    "The Dark Knight Rises",
-    "Christian Bale",
-    "Bruce Wayne"
-),
-(
-    "The Dark Knight Rises",
-    "Gary Oldman",
-    "Commissioner Gordon"
-),
-(
-    "The Dark Knight Rises",
-    "Tom Hardy",
-    "Bane"
-),
-(
-    "The Dark Knight Rises",
-    "Joseph Gordon-Levitt",
-    "John Blake"
-),
-(
-    "The Dark Knight Rises",
-    "Anne Hathaway",
-    "Selina Kyle"
+    1
 );
 
+INSERT INTO directors(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+);
+VALUES (
+    "Christopher Nolan"
+);
+
+INSERT INTO  actors(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    movie_id INTEGER,
+    director_id INTEGER,
+);
+VALUES (
+    "Christian Bale",
+    1
+    1
+
+),
+(
+    "Michael Caine",
+    1
+    1
+),
+(
+    "Liam Neeson",
+    1
+    1
+),
+(
+    "Katie Holmes",
+    1
+    1
+),
+(
+    "Gary Oldman",
+    1,
+    1
+),
+(
+    "Christian Bale",
+    2,
+    1
+),
+(
+    "Heath Ledger",
+    2,
+    1
+),
+(
+    "Aaron Eckhart",
+    2,
+    1
+),
+(
+    "Michael Caine",
+    2,
+    1
+),
+(
+    "Maggie Gyllenhaal",
+    2,
+    1
+),
+(
+    "Christian Bale",
+    3,
+    1
+),
+(
+    "Gary Oldman",
+    3,
+    1
+),
+(
+    "Tom Hardy",
+    3,
+    1
+),
+(
+    "Joseph Gordon-Levitt",
+    3,
+    1
+),
+(
+    "The Dark Knight Rises",
+    3,
+    1
+);
+
+INSERT INTO  roles(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    movie_id INTEGER,
+
+);
+VALUES (
+    "Bruce Wayne",
+    1
+    1
+
+),
+(
+    "Michael Caine",
+    1
+    1
+),
+(
+    "Liam Neeson",
+    1
+    1
+),
+(
+    "Katie Holmes",
+    1
+    1
+),
+(
+    "Gary Oldman",
+    1,
+    1
+),
+(
+    "Christian Bale",
+    2,
+    1
+),
+(
+    "Heath Ledger",
+    2,
+    1
+),
+(
+    "Aaron Eckhart",
+    2,
+    1
+),
+(
+    "Michael Caine",
+    2,
+    1
+),
+(
+    "Maggie Gyllenhaal",
+    2,
+    1
+),
+(
+    "Christian Bale",
+    3,
+    1
+),
+(
+    "Gary Oldman",
+    3,
+    1
+),
+(
+    "Tom Hardy",
+    3,
+    1
+),
+(
+    "Joseph Gordon-Levitt",
+    3,
+    1
+),
+(
+    "The Dark Knight Rises",
+    3,
+    1
+);
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
