@@ -80,13 +80,14 @@ CREATE TABLE movies(
     title TEXT,
     year_released TEXT,
     rating TEXT,
-    director_id INTEGER
+    director_id INTEGER,
+    movie_id INTEGER
 );
 
 CREATE TABLE directors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fullname TEXT,
-    director_id INTEGER
+    directmovie_id INTEGER
 );
 
 CREATE TABLE actors(
@@ -115,34 +116,46 @@ INSERT INTO movies(
     title,
     year_released,
     rating,
-    director_id
+    director_id,
+    movie_id
 )
 VALUES (
     "Batman Begins",
     2005,
     "PG-13",
+    1,
     1
 ),
  (
     "The Dark Knight",
     2008,
     "PG-13",
-    1
+    1,
+    2
 ),
  (
     "The Dark Knight Rises",
     2012,
     "PG-13",
-    1
+    1,
+    3
 );
 
 INSERT INTO directors(
     fullname,
-    director_id
+    directmovie_id
 )
 VALUES (
     "Christopher Nolan",
     1
+),
+(
+    "Christopher Nolan",
+    2
+),
+(
+    "Christopher Nolan",
+    3
 );
 
 INSERT INTO  actors(
@@ -342,16 +355,9 @@ VALUES (
 .print ""
 
 -- The SQL statement for the movies output
-SELECT movies.title, movies.year_released TEXT,
-    rating TEXT,
-    director_id INTEGER
-
-
-SELECT * FROM movies;
-SELECT * FROM directors;
-SELECT * FROM actors;
-SELECT * FROM roles;
-SELECT * FROM roles_membership;
+SELECT movies.title, movies.year_released, movies.rating, directors.fullname
+FROM movies
+INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
 
 -- Prints a header for the cast output
 .print ""
@@ -360,4 +366,6 @@ SELECT * FROM roles_membership;
 .print ""
 
 -- The SQL statement for the cast output
-SELECT * FROM top_casts;
+SELECT movies.title, movies.year_released, movies.rating, directors.fullname
+FROM movies
+INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
