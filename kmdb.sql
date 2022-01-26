@@ -68,7 +68,11 @@
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS casts;
+DROP TABLE IF EXISTS directors;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS roles_membership;
+
 
 -- Create new tables, according to your domain model
 CREATE TABLE movies(
@@ -81,20 +85,27 @@ CREATE TABLE movies(
 
 CREATE TABLE directors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT
+    fullname TEXT,
+    director_id INTEGER
 );
 
 CREATE TABLE actors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fullname TEXT,
     movie_id INTEGER,
-    director_id INTEGER,
+    director_id INTEGER
 );
 
 CREATE TABLE roles(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
+    fullname TEXT;
+    role_id INTEGER
+);
+
+CREATE TABLE roles_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
+    role_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -126,37 +137,37 @@ VALUES (
 );
 
 INSERT INTO directors(
-    fullname
+    fullname,
+    director_id
 )
 VALUES (
-    "Christopher Nolan"
+    "Christopher Nolan",
+    1
 );
 
 INSERT INTO  actors(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
-    movie_id INTEGER,
-    director_id INTEGER,
-);
+    fullname,
+    movie_id,
+    director_id
+)
 VALUES (
     "Christian Bale",
+    1,
     1
-    1
-
 ),
 (
     "Michael Caine",
-    1
+    1,
     1
 ),
 (
     "Liam Neeson",
-    1
+    1,
     1
 ),
 (
     "Katie Holmes",
-    1
+    1,
     1
 ),
 (
@@ -210,107 +221,143 @@ VALUES (
     1
 ),
 (
-    "The Dark Knight Rises",
+    "Anne Hathaway",
     3,
     1
 );
 
 INSERT INTO  roles(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
-    movie_id INTEGER,
-
-);
+    fullname,
+    role_id
+)
 VALUES (
     "Bruce Wayne",
     1
-    1
+),
+(
+    "Alfred",
+    2
+),
+(
+    "Ra's Al Ghul",
+    3
+),
+(
+    "Rachel Dawes",
+    4
+),
+(
+    "Commissioner Gordon",
+    5
+),
+(
+    "Joker",
+    6
+),
+(
+    "Harvey Dent",
+    7
+),
+(
+    "Bane",
+    8
+),
+(
+    "John Blake",
+    9
+),
+(
+    "Selina Kyle",
+    10
+);
 
-),
-(
-    "Michael Caine",
-    1
-    1
-),
-(
-    "Liam Neeson",
-    1
-    1
-),
-(
-    "Katie Holmes",
-    1
-    1
-),
-(
-    "Gary Oldman",
+INSERT INTO roles_membership(
+    movie_id,
+    role_id
+)
+VALUES (
     1,
     1
 ),
 (
-    "Christian Bale",
+    1,
+    2
+),
+(
+    1,
+    3
+),
+(
+    1,
+    4
+),
+(
+    1,
+    5
+),
+(
     2,
     1
 ),
 (
-    "Heath Ledger",
     2,
-    1
+    6
 ),
 (
-    "Aaron Eckhart",
     2,
-    1
+    7
 ),
 (
-    "Michael Caine",
     2,
-    1
+    2
 ),
 (
-    "Maggie Gyllenhaal",
     2,
-    1
+    4
 ),
 (
-    "Christian Bale",
     3,
     1
 ),
 (
-    "Gary Oldman",
     3,
-    1
+    5
 ),
 (
-    "Tom Hardy",
     3,
-    1
+    8
 ),
 (
-    "Joseph Gordon-Levitt",
     3,
-    1
+    9
 ),
 (
-    "The Dark Knight Rises",
     3,
-    1
+    10
 );
+
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
 .print ""
 
 -- The SQL statement for the movies output
+SELECT movies.title, movies.year_released TEXT,
+    rating TEXT,
+    director_id INTEGER
+
+
 SELECT * FROM movies;
+SELECT * FROM directors;
+SELECT * FROM actors;
+SELECT * FROM roles;
+SELECT * FROM roles_membership;
 
 -- Prints a header for the cast output
 .print ""
 .print "Top Cast"
 .print "========"
 .print ""
-
 
 -- The SQL statement for the cast output
 SELECT * FROM top_casts;
