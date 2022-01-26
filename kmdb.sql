@@ -105,7 +105,7 @@ CREATE TABLE roles(
 CREATE TABLE roles_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
-    id INTEGER
+    membership_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -285,7 +285,7 @@ VALUES (
 
 INSERT INTO roles_membership(
     movie_id,
-    id
+    membership_id
 )
 VALUES (
     1,
@@ -367,7 +367,7 @@ INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
 -- The SQL statement for the cast output
 SELECT movies.title, actors.fullname, roles.fullname
 FROM movies
+INNER JOIN roles ON roles.role_id = roles_membership.membership_id
 INNER JOIN actors ON movies.movie_id=actors.movie_id
-INNER JOIN roles ON roles.role_id=roles_membership.id
-INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id;
-
+INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id
+GROUP BY actors.fullname;
