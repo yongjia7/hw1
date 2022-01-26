@@ -370,4 +370,5 @@ FROM movies
 INNER JOIN roles ON roles.role_id = roles_membership.membership_id
 INNER JOIN actors ON movies.movie_id=actors.movie_id
 INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id
-GROUP BY actors.fullname;
+GROUP BY roles_membership.membership_id
+ORDER BY movies.year_released;
