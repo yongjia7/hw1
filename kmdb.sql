@@ -86,14 +86,13 @@ CREATE TABLE movies(
 CREATE TABLE directors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fullname TEXT,
-    directmovie_id INTEGER
+    director_id INTEGER
 );
 
 CREATE TABLE actors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fullname TEXT,
-    movie_id INTEGER,
-    director_id INTEGER
+    actor_id INTEGER
 );
 
 CREATE TABLE roles(
@@ -105,7 +104,8 @@ CREATE TABLE roles(
 CREATE TABLE roles_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
-    membership_id INTEGER
+    actor_id INTEGER,
+    role_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -118,235 +118,69 @@ INSERT INTO movies(
     director_id,
     movie_id
 )
-VALUES (
-    "Batman Begins",
-    2005,
-    "PG-13",
-    1,
-    1
-),
- (
-    "The Dark Knight",
-    2008,
-    "PG-13",
-    1,
-    2
-),
- (
-    "The Dark Knight Rises",
-    2012,
-    "PG-13",
-    1,
-    3
-);
+VALUES ("Batman Begins",2005,"PG-13",1,1),
+ ("The Dark Knight", 2008, "PG-13",1,2),
+ ("The Dark Knight Rises",2012,"PG-13",1,3);
 
 INSERT INTO directors(
     fullname,
-    directmovie_id
+    director_id
 )
-VALUES (
-    "Christopher Nolan",
-    1
-),
-(
-    "Christopher Nolan",
-    2
-),
-(
-    "Christopher Nolan",
-    3
-);
+VALUES ("Christopher Nolan",1),
+("Christopher Nolan",2),
+("Christopher Nolan",3);
 
 INSERT INTO actors(
     fullname,
-    movie_id,
-    director_id
+    actor_id
 )
-VALUES (
-    "Christian Bale",
-    1,
-    1
-),
-(
-    "Michael Caine",
-    1,
-    1
-),
-(
-    "Liam Neeson",
-    1,
-    1
-),
-(
-    "Katie Holmes",
-    1,
-    1
-),
-(
-    "Gary Oldman",
-    1,
-    1
-),
-(
-    "Christian Bale",
-    2,
-    1
-),
-(
-    "Heath Ledger",
-    2,
-    1
-),
-(
-    "Aaron Eckhart",
-    2,
-    1
-),
-(
-    "Michael Caine",
-    2,
-    1
-),
-(
-    "Maggie Gyllenhaal",
-    2,
-    1
-),
-(
-    "Christian Bale",
-    3,
-    1
-),
-(
-    "Gary Oldman",
-    3,
-    1
-),
-(
-    "Tom Hardy",
-    3,
-    1
-),
-(
-    "Joseph Gordon-Levitt",
-    3,
-    1
-),
-(
-    "Anne Hathaway",
-    3,
-    1
-);
+VALUES ("Christian Bale",1),
+("Michael Caine",2),
+("Liam Neeson",3),
+("Katie Holmes",4),
+("Gary Oldman",5),
+("Heath Ledger",6),
+("Aaron Eckhart",7),
+("Maggie Gyllenhaal",8),
+("Tom Hardy",9),
+("Joseph Gordon-Levitt",10),
+("Anne Hathaway",11);
 
 INSERT INTO roles(
     fullname,
     role_id
 )
-VALUES (
-    "Bruce Wayne",
-    1
-),
-(
-    "Alfred",
-    2
-),
-(
-    "Ra's Al Ghul",
-    3
-),
-(
-    "Rachel Dawes",
-    4
-),
-(
-    "Commissioner Gordon",
-    5
-),
-(
-    "Joker",
-    6
-),
-(
-    "Harvey Dent",
-    7
-),
-(
-    "Bane",
-    8
-),
-(
-    "John Blake",
-    9
-),
-(
-    "Selina Kyle",
-    10
-);
+VALUES ("Bruce Wayne",1),
+("Alfred",2),
+("Ra's Al Ghul",3),
+("Rachel Dawes",4),
+("Commissioner Gordon",5),
+("Joker",6),
+("Harvey Dent",7),
+("Bane",8),
+("John Blake",9),
+("Selina Kyle",10);
 
 INSERT INTO roles_membership(
     movie_id,
-    membership_id
+    actors_id，
+    role_id
 )
-VALUES (
-    1,
-    1
-),
-(
-    1,
-    2
-),
-(
-    1,
-    3
-),
-(
-    1,
-    4
-),
-(
-    1,
-    5
-),
-(
-    2,
-    1
-),
-(
-    2,
-    6
-),
-(
-    2,
-    7
-),
-(
-    2,
-    2
-),
-(
-    2,
-    4
-),
-(
-    3,
-    1
-),
-(
-    3,
-    5
-),
-(
-    3,
-    8
-),
-(
-    3,
-    9
-),
-(
-    3,
-    10
-);
+VALUES (1,1,1),
+(1,2,2),
+(1,3,3),
+(1,4,4),
+(1,5,5),
+(2,1,1),
+(2,5,6),
+(2,6,7),
+(2,2,2),
+(2,7,4),
+(3,1,1),
+(3,5,5),
+(3,8,8),
+(3,9,9),
+(3,10,10);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -356,7 +190,7 @@ VALUES (
 -- The SQL statement for the movies output
 SELECT movies.title, movies.year_released, movies.rating, directors.fullname
 FROM movies
-INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
+INNER JOIN directors ON movies.movie_id=directors.director_id;
 
 -- Prints a header for the cast output
 .print ""
@@ -367,8 +201,5 @@ INNER JOIN directors ON movies.movie_id=directors.directmovie_id;
 -- The SQL statement for the cast output
 SELECT movies.title, actors.fullname, roles.fullname
 FROM movies
-INNER JOIN roles ON roles.role_id = roles_membership.membership_id
-INNER JOIN actors ON movies.movie_id=actors.movie_id
+INNER JOIN roles ON roles.role_id = roles_membership.roles_id
 INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id
-GROUP BY roles_membership.membership_id
-ORDER BY movies.year_released;
