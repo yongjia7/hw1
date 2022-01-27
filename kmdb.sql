@@ -91,21 +91,21 @@ CREATE TABLE directors(
 
 CREATE TABLE actors(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
+    actor_name TEXT,
     actor_id INTEGER
 );
 
 CREATE TABLE roles(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
+    role_name TEXT,
     role_id INTEGER
 );
 
-CREATE TABLE roles_membership(
+CREATE TABLE roles_membership (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
-    actor_id INTEGER,
-    role_id INTEGER
+    movieactor_id INTEGER,
+    movierole_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -131,10 +131,11 @@ VALUES ("Christopher Nolan",1),
 ("Christopher Nolan",3);
 
 INSERT INTO actors(
-    fullname,
+    actor_name,
     actor_id
 )
-VALUES ("Christian Bale",1),
+VALUES 
+("Christian Bale",1),
 ("Michael Caine",2),
 ("Liam Neeson",3),
 ("Katie Holmes",4),
@@ -147,10 +148,11 @@ VALUES ("Christian Bale",1),
 ("Anne Hathaway",11);
 
 INSERT INTO roles(
-    fullname,
+    role_name,
     role_id
 )
-VALUES ("Bruce Wayne",1),
+VALUES 
+("Bruce Wayne",1),
 ("Alfred",2),
 ("Ra's Al Ghul",3),
 ("Rachel Dawes",4),
@@ -163,24 +165,25 @@ VALUES ("Bruce Wayne",1),
 
 INSERT INTO roles_membership(
     movie_id,
-    actors_id，
-    role_id
+    movieactor_id,
+    movierole_id
 )
-VALUES (1,1,1),
+VALUES 
+(1,1,1),
 (1,2,2),
 (1,3,3),
 (1,4,4),
 (1,5,5),
 (2,1,1),
-(2,5,6),
-(2,6,7),
+(2,6,6),
+(2,7,7),
 (2,2,2),
-(2,7,4),
+(2,8,4),
 (3,1,1),
 (3,5,5),
-(3,8,8),
-(3,9,9),
-(3,10,10);
+(3,9,8),
+(3,10,9),
+(3,11,10);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -199,7 +202,9 @@ INNER JOIN directors ON movies.movie_id=directors.director_id;
 .print ""
 
 -- The SQL statement for the cast output
-SELECT movies.title, actors.fullname, roles.fullname
-FROM movies
-INNER JOIN roles ON roles.role_id = roles_membership.roles_id
-INNER JOIN roles_membership ON movies.movie_id=roles_membership.movie_id
+SELECT movies.title, actors.actor_name, roles.role_name
+FROM roles_membership
+INNER JOIN roles ON roles.role_id = roles_membership.movierole_id
+INNER JOIN actors ON actors.actor_id = roles_membership.movieactor_id
+INNER JOIN movies ON movies.movie_id=roles_membership.movie_id
+ORDER BY movies.year_released;
